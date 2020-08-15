@@ -61,7 +61,7 @@ def get_movie_info(language='TW'):
     chrome_options.add_argument('--no-sandbox')
     driver = webdriver.Chrome(options=chrome_options)
 
-    all_info = load_json_file_to_dict_with_json_file_path('one_piece_movies_01:10:37/one_piece_movies.json', 'movies')
+    all_info = load_json_file_to_dict_with_json_file_path('one_piece_movies_22:51:16/one_piece_movies.json', 'movies')
     all_urls = all_info[0]['movie_url']
 
 
@@ -76,21 +76,12 @@ def get_movie_info(language='TW'):
             elements_description = driver.find_elements_by_css_selector('p+ p , h2+ p , .pi-layout-default+ p')
             elements_image_url = driver.find_elements_by_css_selector('.pi-image-thumbnail')
 
-            description.append([ele.text for ele in elements_description])
-            image_url.append([ele.get_attribute('src') for ele in elements_image_url])
-
-        joined_description=[]
-
-        for record in description:
-            joined_record = ''.join(record)
-            joined_description.append(joined_record)
-        
-
-
+            description.append(''.join([ele.text for ele in elements_description]))
+            image_url.append([ele.get_attribute('src') for ele in elements_image_url][0])
         
 
         onepiece_content = Onepiece_content(
-            description = joined_description,
+            description = description,
             image_url = image_url,
         )
         onepieces_content =[]
